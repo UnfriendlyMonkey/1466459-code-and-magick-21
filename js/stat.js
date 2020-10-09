@@ -15,6 +15,12 @@ const renderRectangle = function (ctx, x, y, width, height, color) {
   ctx.fillRect(x, y, width, height);
 };
 
+const renderText = function (ctx, text, x, y, color = `#000`, font = `16px PT Mono`) {
+  ctx.fillStyle = color;
+  ctx.font = font;
+  ctx.fillText(text, x, y);
+};
+
 const findMaxTime = function (arr) {
   let maxTime = arr[0];
   for (let i = 1; i < arr.length; i++) {
@@ -25,8 +31,12 @@ const findMaxTime = function (arr) {
   return maxTime;
 };
 
+const getRandomInt = function (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
 const getRandomBlue = function () {
-  let saturation = Math.random() * 100;
+  let saturation = getRandomInt(1, 100);
   let randomBlue = `hsl(240, ${saturation}%, 50%)`;
   return randomBlue;
 };
@@ -37,12 +47,10 @@ window.renderStatistics = function (ctx, names, times) {
   renderRectangle(ctx, 110, 20, CLOUD_WIDTH, CLOUD_HEIGHT, `rgba(0, 0, 0, 0.7)`);
   renderRectangle(ctx, 100, 10, CLOUD_WIDTH, CLOUD_HEIGHT, `#fff`);
 
-  ctx.fillStyle = `#000`;
-  ctx.font = `16px PT Mono`;
-  ctx.fillText(`Ура, Вы победили!`, START_X, 40);
-  ctx.fillText(`Список результатов:`, START_X, 60);
+  renderText(ctx, `Ура, Вы победили!`, START_X, 40);
+  renderText(ctx, `Список результатов:`, START_X, 60);
 
-  let maximumTime = findMaxTime(times);
+  const maximumTime = findMaxTime(times);
   let barHeight = MAX_HEIGHT;
   let difference = 0;
   let barY = BAR_MAX_Y + difference;
@@ -59,10 +67,8 @@ window.renderStatistics = function (ctx, names, times) {
       barY = BAR_MAX_Y + difference;
     }
 
-
-    ctx.fillStyle = `#000`;
-    ctx.fillText(names[i], START_X + (BAR_WIDTH + GAP) * i, NAMES_Y);
-    ctx.fillText(Math.round(times[i]), START_X + (BAR_WIDTH + GAP) * i, barY - 10);
+    renderText(ctx, names[i], START_X + (BAR_WIDTH + GAP) * i, NAMES_Y);
+    renderText(ctx, Math.round(times[i]), START_X + (BAR_WIDTH + GAP) * i, barY - 10);
     if (names[i] !== `Вы`) {
       barColor = getRandomBlue();
     } else {
