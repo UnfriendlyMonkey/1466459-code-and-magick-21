@@ -78,7 +78,7 @@ const changeEyesColor = (color) => {
 const changeFireballColor = (color) => {
   fireballInput.value = color;
   fireballSetup.style = `background: ${color}`;
-}
+};
 
 const onPopupEscPress = (evt) => {
   if (evt.key === `Escape`) {
@@ -90,12 +90,12 @@ const onPopupEscPress = (evt) => {
 const openSetup = () => {
   userDialog.classList.remove(`hidden`);
   document.addEventListener(`keydown`, onPopupEscPress);
-}
+};
 
 const closeSetup = () => {
   userDialog.classList.add(`hidden`);
   document.removeEventListener(`keydown`, onPopupEscPress);
-}
+};
 
 // Открытие и закрытие окна настроек
 
@@ -131,7 +131,7 @@ eyesSetup.addEventListener(`click`, function () {
 
 fireballSetup.addEventListener(`click`, function () {
   changeFireballColor(getRandomEl(FIREBALL_COLOR));
-})
+});
 
 // Показ блока схожих персонажей
 
