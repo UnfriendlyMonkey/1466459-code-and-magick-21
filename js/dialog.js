@@ -37,4 +37,4 @@
     window.util.isEnterEvent(evt, closeSetup);
   });
 
-}) ();
+})();
