@@ -6,6 +6,8 @@
   const setupOpen = document.querySelector(`.setup-open`);
   const setupClose = userDialog.querySelector(`.setup-close`);
 
+  const form = userDialog.querySelector(`.setup-wizard-form`);
+
   const onPopupEscPress = (evt) => {
     window.util.isEscEvent(evt, closeSetup);
   };
@@ -35,6 +37,11 @@
 
   setupClose.addEventListener(`keydown`, function (evt) {
     window.util.isEnterEvent(evt, closeSetup);
+  });
+
+  form.addEventListener(`submit`, function (evt) {
+    window.backend.save(new FormData(form), closeSetup);
+    evt.preventDefault();
   });
 
 })();
