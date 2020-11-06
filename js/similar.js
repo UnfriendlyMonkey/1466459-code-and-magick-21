@@ -6,8 +6,6 @@
 
   const userDialog = document.querySelector(`.setup`);
 
-  userDialog.querySelector(`.setup-similar`).classList.remove(`hidden`);
-
   const similarListElement = document.querySelector(`.setup-similar-list`);
   const similarWizardTemplate = document.querySelector(`#similar-wizard-template`)
       .content
@@ -23,8 +21,7 @@
     return wizardElement;
   };
 
-  window.backend.load(function (wizardsList) {
-
+  const successHandler = (wizardsList) => {
     const fragment = document.createDocumentFragment();
     let count = wizardsList.length < MAX_SIMILAR_LIST ? wizardsList.length : MAX_SIMILAR_LIST;
     for (let i = 0; i < count; i++) {
@@ -33,7 +30,26 @@
 
     similarListElement.appendChild(fragment);
 
-  }, function() {});
+    userDialog.querySelector(`.setup-similar`).classList.remove(`hidden`);
+  };
 
+  const errorHandler = (errorMessage) => {
+    let node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `30px`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
+  // window.backend.load(successHandler, errorHandler);
+
+  window.similar = {
+    successHandler,
+    errorHandler,
+  };
 
 })();

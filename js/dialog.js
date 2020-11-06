@@ -15,6 +15,7 @@
   const openSetup = () => {
     userDialog.classList.remove(`hidden`);
     document.addEventListener(`keydown`, onPopupEscPress);
+    window.backend.load(window.similar.successHandler, window.similar.errorHandler);
   };
 
   const closeSetup = () => {

@@ -5,14 +5,31 @@
   const SAVE_URL = `https://21.javascript.pages.academy/code-and-magick`;
   const LOAD_URL = `https://21.javascript.pages.academy/code-and-magick/data`;
 
+  const StatusCode = {
+    OK: 200,
+  };
+  const TIMEOUT_TIME = 1500;
+
   window.backend = {
     load: (onLoad, onError) => {
       let xhr = new XMLHttpRequest();
       xhr.responseType = `json`;
 
       xhr.addEventListener(`load`, function () {
-        onLoad(xhr.response);
+        if (xhr.status === StatusCode.OK) {
+          onLoad(xhr.response);
+        } else {
+          onError(`Статус ответа: ${xhr.status} ${xhr.statusText}`);
+        }
       });
+      xhr.addEventListener(`error`, function () {
+        onError(`Ошибка соединения`);
+      });
+      xhr.addEventListener(`timeout`, function () {
+        onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
+      });
+
+      xhr.timeout = TIMEOUT_TIME;
 
       xhr.open(`GET`, LOAD_URL);
       xhr.send();
