@@ -45,8 +45,6 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  // window.backend.load(successHandler, errorHandler);
-
   window.similar = {
     successHandler,
     errorHandler,

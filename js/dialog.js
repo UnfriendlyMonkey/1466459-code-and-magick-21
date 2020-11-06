@@ -40,9 +40,11 @@
     window.util.isEnterEvent(evt, closeSetup);
   });
 
-  form.addEventListener(`submit`, function (evt) {
-    window.backend.save(new FormData(form), closeSetup);
+  const submitHandler = (evt) => {
+    window.backend.save(new FormData(form), closeSetup, window.similar.errorHandler);
     evt.preventDefault();
-  });
+  };
+
+  form.addEventListener(`submit`, submitHandler);
 
 })();
