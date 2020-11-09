@@ -6,6 +6,8 @@
   const setupOpen = document.querySelector(`.setup-open`);
   const setupClose = userDialog.querySelector(`.setup-close`);
 
+  const form = userDialog.querySelector(`.setup-wizard-form`);
+
   const onPopupEscPress = (evt) => {
     window.util.isEscEvent(evt, closeSetup);
   };
@@ -13,6 +15,7 @@
   const openSetup = () => {
     userDialog.classList.remove(`hidden`);
     document.addEventListener(`keydown`, onPopupEscPress);
+    window.backend.load(window.similar.successHandler, window.similar.errorHandler);
   };
 
   const closeSetup = () => {
@@ -36,5 +39,12 @@
   setupClose.addEventListener(`keydown`, function (evt) {
     window.util.isEnterEvent(evt, closeSetup);
   });
+
+  const submitHandler = (evt) => {
+    window.backend.save(new FormData(form), closeSetup, window.similar.errorHandler);
+    evt.preventDefault();
+  };
+
+  form.addEventListener(`submit`, submitHandler);
 
 })();
