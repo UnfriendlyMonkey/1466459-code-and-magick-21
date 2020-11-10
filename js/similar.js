@@ -4,8 +4,6 @@
 
   const MAX_SIMILAR_LIST = 4;
 
-  const userDialog = document.querySelector(`.setup`);
-
   const similarListElement = document.querySelector(`.setup-similar-list`);
   const similarWizardTemplate = document.querySelector(`#similar-wizard-template`)
       .content
@@ -52,7 +50,7 @@
       return scoreDiff;
     });
 
-    similarListElement.innerHTML = '';
+    similarListElement.innerHTML = ``;
     const fragment = document.createDocumentFragment();
 
     let count = wizards.length < MAX_SIMILAR_LIST ? wizards.length : MAX_SIMILAR_LIST;
