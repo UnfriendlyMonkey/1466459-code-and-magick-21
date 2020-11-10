@@ -38,14 +38,21 @@
   const eyesInput = userDialog.querySelector(`.eyes-color`);
   const fireballInput = userDialog.querySelector(`.fireball-color`);
 
+  let coatColor = `rgb(101, 137, 164)`;
+  let eyesColor = `black`;
+
   const changeCoatColor = (color) => {
     coatInput.value = color;
     coatSetup.style = `fill: ${color}`;
+    coatColor = color;
+    window.debounce(window.similar.renderSimilarList(coatColor, eyesColor));
   };
 
   const changeEyesColor = (color) => {
     eyesInput.value = color;
     eyesSetup.style = `fill: ${color}`;
+    eyesColor = color;
+    window.debounce(window.similar.renderSimilarList(coatColor, eyesColor));
   };
 
   const changeFireballColor = (color) => {

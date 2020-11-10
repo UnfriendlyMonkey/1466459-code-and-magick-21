@@ -15,7 +15,8 @@
   const openSetup = () => {
     userDialog.classList.remove(`hidden`);
     document.addEventListener(`keydown`, onPopupEscPress);
-    window.backend.load(window.similar.successHandler, window.similar.errorHandler);
+    window.backend.load(window.similar.successHandler, window.util.errorHandler);
+    userDialog.querySelector(`.setup-similar`).classList.remove(`hidden`);
   };
 
   const closeSetup = () => {
@@ -41,7 +42,7 @@
   });
 
   const submitHandler = (evt) => {
-    window.backend.save(new FormData(form), closeSetup, window.similar.errorHandler);
+    window.backend.save(new FormData(form), closeSetup, window.util.errorHandler);
     evt.preventDefault();
   };
 

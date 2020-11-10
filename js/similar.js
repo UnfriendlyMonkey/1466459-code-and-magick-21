@@ -21,33 +21,58 @@
     return wizardElement;
   };
 
-  const successHandler = (wizardsList) => {
+  const getScore = (wizard, coatColor, eyesColor) => {
+    let score = 0;
+    if (wizard.colorCoat === coatColor) {
+      score += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      score += 1;
+    }
+    return score;
+  };
+
+  const namesComparator = (left, right) => {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
+  const renderSimilarList = (coatColor, eyesColor) => {
+
+    const wizards = wizardsList.sort(function (left, right) {
+      let scoreDiff = getScore(right, coatColor, eyesColor) - getScore(left, coatColor, eyesColor);
+      if (scoreDiff === 0) {
+        scoreDiff = namesComparator(left.name, right.name);
+      }
+      return scoreDiff;
+    });
+
+    similarListElement.innerHTML = '';
     const fragment = document.createDocumentFragment();
-    let count = wizardsList.length < MAX_SIMILAR_LIST ? wizardsList.length : MAX_SIMILAR_LIST;
+
+    let count = wizards.length < MAX_SIMILAR_LIST ? wizards.length : MAX_SIMILAR_LIST;
     for (let i = 0; i < count; i++) {
-      fragment.appendChild(renderWizard(window.util.getRandomEl(wizardsList)));
+      fragment.appendChild(renderWizard(wizards[i]));
     }
 
     similarListElement.appendChild(fragment);
-
-    userDialog.querySelector(`.setup-similar`).classList.remove(`hidden`);
   };
 
-  const errorHandler = (errorMessage) => {
-    let node = document.createElement(`div`);
-    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
-    node.style.position = `absolute`;
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = `30px`;
+  let wizardsList = [];
 
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement(`afterbegin`, node);
+  const successHandler = (data) => {
+    wizardsList = data;
+    renderSimilarList(`rgb(101, 137, 164)`, `black`);
   };
 
   window.similar = {
     successHandler,
-    errorHandler,
+    renderSimilarList,
   };
 
 })();
