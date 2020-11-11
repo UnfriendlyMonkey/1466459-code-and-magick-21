@@ -70,7 +70,7 @@
 
   window.similar = {
     successHandler,
-    renderSimilarList,
+    renderSimilarList: window.debounce(renderSimilarList),
   };
 
 })();
